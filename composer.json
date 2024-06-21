@@ -1,0 +1,43 @@
+{
+    "name": "codefabrik/qdrant-laravel",
+    "description": "Qdrant client for Laravel",
+    "type": "library",
+    "require": {
+        "symfony/http-client": "^7.1",
+        "nyholm/psr7": "^1.8",
+        "illuminate/support": "^11.11",
+        "illuminate/console": "^11.11",
+        "guzzlehttp/guzzle": "^7.0"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Codefabrik\\QdrantLaravel\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "LukasSkywalker",
+            "email": "git@lukasdiener.ch"
+        }
+    ],
+    "config": {
+        "allow-plugins": {
+            "php-http/discovery": true
+        }
+    },
+    "require-dev": {
+        "laravel/pint": "^1.16",
+        "phpstan/phpstan": "^1.11"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Codefabrik\\QdrantLaravel\\Providers\\PackageServiceProvider"
+            ],
+            "aliases": {
+                "QdrantLaravel": "Coefabrik\\QdrantLaravel\\Facades\\QdrantLaravel"
+            }
+        }
+    }
+}
