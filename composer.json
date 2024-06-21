@@ -24,12 +24,16 @@
     ],
     "config": {
         "allow-plugins": {
-            "php-http/discovery": true
+            "php-http/discovery": true,
+            "pestphp/pest-plugin": true
         }
     },
     "require-dev": {
         "laravel/pint": "^1.16",
-        "phpstan/phpstan": "^1.11"
+        "phpstan/phpstan": "^1.11",
+        "orchestra/testbench": "9.x-dev",
+        "pestphp/pest": "2.x-dev",
+        "pestphp/pest-plugin-laravel": "2.x-dev"
     },
     "extra": {
         "laravel": {

@@ -55,6 +55,10 @@ $qdrant->collection()->create(int $vectorSize, string $distanceMetric)
 
 ## Development
 
+### Testing
+
+`./vendor/bin/pest`
+
 ### Linting
 
 `./vendor/bin/pint`
