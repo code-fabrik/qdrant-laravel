@@ -18,9 +18,9 @@ class QdrantClient
 
     public function __construct()
     {
-        $this->qdrantHost = Config::get('qdrant.host');
-        $this->qdrantPort = Config::get('qdrant.port');
-        $this->qdrantCollection = Config::get('qdrant.collection');
+        $this->qdrantHost = Config::get('qdrant.host', 'http://localhost');
+        $this->qdrantPort = Config::get('qdrant.port', 6333);
+        $this->qdrantCollection = Config::get('qdrant.collection', 'main');
     }
 
     public function collection()
