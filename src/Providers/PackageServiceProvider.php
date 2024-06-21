@@ -18,5 +18,16 @@ final class PackageServiceProvider extends ServiceProvider
                 ],
             );
         }
+
+        $this->publishes([
+            __DIR__.'/../../config/qdrant-laravel.php' => config_path('qdrant-laravel.php'),
+        ]);
+    }
+
+    public function register(): void
+    {
+        $this->mergeConfigFrom(
+            __DIR__.'/../../config/qdrant-laravel.php', 'qdrant-laravel'
+        );
     }
 }
