@@ -15,19 +15,28 @@ class Search
         $this->client = $client;
     }
 
-    public function search(array $documentIds, array $vector, int $limit = 10)
+    public function search(array $vector, mixed $filters = [], ?int $limit = 10)
     {
-        return $this->client->post("/points/search", [
+        $body = [
             'vector' => $vector,
             'limit' => $limit,
-            'filter' => [
-                'must' => [
-                    'key' => 'document_id',
-                    'match' => [
-                        'any' => $documentIds
-                    ]
+        ];
+
+        if (count($filters)) {
+            $body['filter'] = [
+                'must' => []
+            ];
+        }
+
+        foreach ($filters as $key => $value) {
+            $body['filter']['must'][] = [
+                'key' => $key,
+                'match' => [
+                    'any' => $value
                 ]
-            ]
-        ]);
+            ];
+        }
+
+        return $this->client->post("/points/search", $body);
     }
 }

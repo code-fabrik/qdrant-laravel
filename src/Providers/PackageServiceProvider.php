@@ -27,7 +27,8 @@ final class PackageServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->mergeConfigFrom(
-            __DIR__.'/../../config/qdrant.php', 'qdrant'
+            __DIR__.'/../../config/qdrant.php',
+            'qdrant'
         );
     }
 }
