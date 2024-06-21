@@ -6,8 +6,8 @@
     "require": {
         "symfony/http-client": "^7.1",
         "nyholm/psr7": "^1.8",
-        "illuminate/support": "^11.11",
-        "illuminate/console": "^11.11",
+        "illuminate/support": "^10.0|^11.0",
+        "illuminate/console": "^10.0|^11.0",
         "guzzlehttp/guzzle": "^7.0"
     },
     "license": "MIT",
