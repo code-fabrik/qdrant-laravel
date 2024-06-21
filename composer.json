@@ -2,6 +2,7 @@
     "name": "codefabrik/qdrant-laravel",
     "description": "Qdrant client for Laravel",
     "type": "library",
+    "minimum-stability": "dev",
     "require": {
         "symfony/http-client": "^7.1",
         "nyholm/psr7": "^1.8",
