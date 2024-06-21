@@ -15,7 +15,7 @@ class Search
         $this->client = $client;
     }
 
-    public function search(array $vector, mixed $filters = [], ?int $limit = 10)
+    public function search(array $vector, mixed $filters = [], ?int $limit = 10, bool $exact = false)
     {
         $body = [
             'vector' => $vector,
@@ -25,6 +25,12 @@ class Search
         if (count($filters)) {
             $body['filter'] = [
                 'must' => []
+            ];
+        }
+
+        if ($exact) {
+            $body['params'] = [
+                'exact' => true,
             ];
         }
 
