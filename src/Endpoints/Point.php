@@ -15,13 +15,13 @@ class Point
         $this->client = $client;
     }
 
-    public function insert(string $id, array $vector, array $payload)
+    public function insert(array $ids, array $vectors, array $payloads)
     {
         return $this->client->put("/points?wait=true", [
             'batch' => [
-                'ids' => [$id],
-                'vectors' => [$vector],
-                'payloads' => [$payload]
+                'ids' => $ids,
+                'vectors' => $vectors,
+                'payloads' => $payloads,
             ],
         ]);
     }
@@ -33,26 +33,59 @@ class Point
         ]);
     }
 
+    public function count() {
+        return $this->client->post('/points/count', [
+            'exact' => true,
+        ]);
+    }
+
     public function all()
     {
         $allPoints = [];
-        $offset = null;
+        $offset = null; // Initial offset is null
         $lastOffset = null;
 
         while (true) {
-            $points = $this->client->post("/points/scroll", [ 'offset' => $offset, 'limit' => 1000, ])['result'];
+            $response = $this->client->post("/points/scroll", [
+                'offset' => $offset,
+                'limit' => 1000,
+            ]);
 
-            $allPoints = array_merge($allPoints, $points);
-
-            $offset = end($points)['id'];
-
-            if ($lastOffset == $offset) {
+            if (!isset($response['result']['points'])) {
                 break;
             }
 
+            $points = $response['result']['points'];
+
+            $allPoints = array_merge($allPoints, $points);
+
+            // Update the offset for the next iteration
             $lastOffset = $offset;
+            if (!empty($points)) {
+                $offset = end($points)['id'];
+            } else {
+                break;
+            }
+
+            if ($lastOffset === $offset) {
+                break;
+            }
         }
 
-        return $allPoints;
+        return $this->removeDuplicatesById($allPoints);
+    }
+
+    private function removeDuplicatesById($arr) {
+        $seenIds = [];
+        $result = [];
+
+        foreach ($arr as $item) {
+            if (!isset($seenIds[$item['id']])) {
+                $seenIds[$item['id']] = true;
+                $result[] = $item;
+            }
+        }
+
+        return $result;
     }
 }

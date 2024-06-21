@@ -1,5 +1,9 @@
 <?php
 
+use Orchestra\Testbench\TestCase;
+use Illuminate\Support\Facades\Config;
+use Codefabrik\QdrantLaravel\QdrantClient;
+
 /*
 |--------------------------------------------------------------------------
 | Test Case
@@ -11,7 +15,7 @@
 |
 */
 
-// uses(Tests\TestCase::class)->in('Feature');
+uses(TestCase::class)->in('Feature');
 
 /*
 |--------------------------------------------------------------------------
@@ -39,7 +43,36 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function something()
+function qdrantSetup()
 {
-    // ..
+    Config::set('qdrant.host', 'http://qdrant');
+    Config::set('qdrant.port', 6333);
+    Config::set('qdrant.collection', 'main');
+
+    $qdrant = new QdrantClient();
+
+    try {
+        $qdrant->collection()->delete();
+    } catch (Exception) { }
+
+    return $qdrant->collection()->create(1024, 'Cosine');
+}
+
+function insertFakePoints(int $count) {
+    Config::set('qdrant.host', 'http://qdrant');
+    Config::set('qdrant.port', 6333);
+    Config::set('qdrant.collection', 'main');
+
+    $qdrant = new QdrantClient();
+
+    $ids = [];
+    $vectors = [];
+    $payloads = [];
+    for($i = 0; $i < $count; $i++) {
+        $ids[] = generateRandomString(32);
+        $vectors[] = generateRandomVector(1024);
+        $payloads[] = generateRandomPayload(32);
+    }
+
+    return $qdrant->point()->insert($ids, $vectors, $payloads);
 }

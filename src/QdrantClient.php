@@ -7,6 +7,7 @@ namespace Codefabrik\QdrantLaravel;
 use Codefabrik\QdrantLaravel\Endpoints\Collection;
 use Codefabrik\QdrantLaravel\Endpoints\Point;
 use Codefabrik\QdrantLaravel\Endpoints\Search;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Http;
 
 class QdrantClient
@@ -17,9 +18,9 @@ class QdrantClient
 
     public function __construct()
     {
-        $this->qdrantHost = config('qdrant.host');
-        $this->qdrantPort = config('qdrant.port');
-        $this->qdrantCollection = config('qdrant.collection');
+        $this->qdrantHost = Config::get('qdrant.host');
+        $this->qdrantPort = Config::get('qdrant.port');
+        $this->qdrantCollection = Config::get('qdrant.collection');
     }
 
     public function collection()
@@ -50,6 +51,10 @@ class QdrantClient
     public function put(string $path, $body)
     {
         return $this->request('put', $path, $body);
+    }
+
+    public function delete(string $path) {
+        return $this->request('delete', $path);
     }
 
     private function request(string $method, string $path, $body = null)

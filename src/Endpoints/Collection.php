@@ -31,4 +31,8 @@ class Collection
             ],
         ]);
     }
+
+    public function delete() {
+        return $this->client->delete("");
+    }
 }

@@ -7,12 +7,6 @@
   "service": "app",
 	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
 
-	"containerEnv": {
-    "QDRANT_HOST": "qdrant",
-    "QDRANT_PORT": "6333",
-		"QDRANT_COLLECTION": "main"
-  },
-
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
 
