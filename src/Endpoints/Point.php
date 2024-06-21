@@ -26,10 +26,10 @@ class Point
         ]);
     }
 
-    public function remove(string $id)
+    public function remove(array $ids)
     {
         return $this->client->post("/points/delete?wait=true", [
-            'points' => [$id],
+            'points' => $ids,
         ]);
     }
 
