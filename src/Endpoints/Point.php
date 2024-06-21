@@ -40,7 +40,7 @@ class Point
         $lastOffset = null;
 
         while (true) {
-            $points = $this->client->post("/points/scroll", [ 'offset' => $offset, 'limit' => 1000, ])['result']['points'];
+            $points = $this->client->post("/points/scroll", [ 'offset' => $offset, 'limit' => 1000, ])['result'];
 
             $allPoints = array_merge($allPoints, $points);
 
